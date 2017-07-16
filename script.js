@@ -1,5 +1,5 @@
 var xhr = new XMLHttpRequest();
-var URL = 'http://cors.io/?http://api.population.io:80/1.0/countries';
+var URL = 'https://cors.io/?https://api.population.io:80/1.0/countries';
 xhr.onreadystatechange = function () {
   console.log('hello');
   console.log(this.readyState);
