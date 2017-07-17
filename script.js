@@ -1,14 +1,17 @@
 var xhr = new XMLHttpRequest();
-var URL2 = '//api.population.io/1.0/population/2010/United%20States/';
+var URL2 = 'http://api.population.io/1.0/population/2010/United%20States/';
 var URL = 'https://api.github.com/emojis';
-xhr.onreadystatechange = function () {
+xhr.onload = function () {
   console.log('hello');
   console.log(this.readyState);
   console.log(this.status);
-  console.log(this.responseText);
+  //console.log(this.responseText);
   if (this.status == 200) {
-    // var jsonArray = JSON.stringify(this.responseText);
     // displayData(jsonArray);
+    var object = JSON.parse(this.responseText);
+    console.log(object[0].females);
+    var test = '' + object[0].females;
+    document.getElementById('data').innerHTML = '<p>' + test + '</p>';
   }
 }
 
