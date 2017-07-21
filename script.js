@@ -23,7 +23,7 @@ xhr.onload = function () {
         .enter()
         .append("svg")
         .style("width", function(d) { return d/10000 + "px"; })
-        .style('background-color', function (d) { return 'red'; })
+        .style('background-color', function (d) { return 'black'; })
         // add mouseover effect to change background color to black
         .on('mouseover', function() {
           d3.select(this)
@@ -40,4 +40,3 @@ xhr.onload = function () {
 
 xhr.open('GET', URL2, true);
 xhr.send();
-
