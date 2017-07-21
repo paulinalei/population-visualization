@@ -1,6 +1,5 @@
 var xhr = new XMLHttpRequest();
 var URL2 = 'http://api.population.io/1.0/population/2010/United%20States/';
-var URL = 'https://api.github.com/emojis';
 
 var femalePopulation = [];
 
