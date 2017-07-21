@@ -1,2 +1,2 @@
 # population-visualization
-I'm learning D3
+Using D3.js to visualize population data.
