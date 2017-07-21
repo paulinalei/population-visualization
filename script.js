@@ -21,7 +21,7 @@ xhr.onload = function () {
       d3.select(".data")
         .data(femalePopulation)
         .enter()
-        .append("div")
+        .append("svg")
         .style("width", function(d) { return d/10000 + "px"; })
         .style('background-color', function (d) { return 'red'; })
         // add mouseover effect to change background color to black
