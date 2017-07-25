@@ -2,6 +2,7 @@ var xhr = new XMLHttpRequest();
 var URL2 = 'http://api.population.io/1.0/population/2010/United%20States/';
 
 var femalePopulation = [];
+var malePopulation = [];
 
 xhr.onload = function () {
   console.log('hello');
@@ -13,6 +14,7 @@ xhr.onload = function () {
 
     for (var i = 0; i < object.length; i++) {
       femalePopulation.push(object[i].females);
+      malePopulation.push(object[i].males);
     }
     console.log(femalePopulation);
     if (femalePopulation.length > 0) {
