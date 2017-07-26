@@ -19,39 +19,52 @@ xhr.onload = function () {
     console.log(femalePopulation);
     if (femalePopulation.length > 0) {
       console.log('we in here');
-      var width = 400;
-      var barHeight = 20;
+      //Width and height
+      var w = 800;
+      var h = 800;
+      var barPadding = 1;
 
-      var x = d3.scaleLinear()
-        .domain([0, d3.max(femalePopulation)])
-        .range([0, width]);
+      var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+        11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
 
-      var chart = d3.select('.chart')
-        .attr('width', width)
-        .attr('height', barHeight * femalePopulation.length);
+      //Create SVG element
+      var svg = d3.select("body")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
 
-      var bar = chart.selectAll('g')
+      svg.selectAll("rect")
         .data(femalePopulation)
         .enter()
-          .append('g')
-          .attr('transform', function(d, i) {
-            return 'translate(0,' + i * barHeight + ')';
-          });
-
-      bar.append('rect')
-        .attr('width', x)
-        .attr('height', barHeight - 1);
-
-      bar.append('text')
-        .attr('x', function(d) {
-          return x(d) - 3;
+        .append("rect")
+        .attr("x", function(d, i) {
+          return i * (w / femalePopulation.length);
         })
-        .attr('y', barHeight/2)
-        .attr('dy', '.35em')
-        .text(function(d) {
-          return d;
-        });
+        .attr("y", function(d) {
+          return h - (d/5000);
+        })
+        .attr("width", w / femalePopulation.length - barPadding)
+        .attr("height", function(d) {
+          return (d/5000);
+        })
+        .attr("fill", "teal");
 
+      svg.selectAll("text")
+        .data(femalePopulation)
+        .enter()
+        .append("text")
+        .text(function(d) {
+          return Number(Math.round((d/1000000)+"e1") + "e-1");
+        })
+        .attr("x", function(d, i) {
+          return i * (w / femalePopulation.length) + (w / femalePopulation.length - barPadding) /2;
+        })
+        .attr("y", function(d) {
+          return h - (d/5000) + 14;
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "6px")
+        .attr("fill", "black");
     }
   }
 }
