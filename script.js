@@ -19,15 +19,28 @@ xhr.onload = function () {
     console.log(femalePopulation);
     if (femalePopulation.length > 0) {
       console.log('we in here');
-      //Width and height
+      // Width and height
       var w = 800;
       var h = 800;
       var barPadding = 1;
 
-      var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-        11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+      // TODO: fix scales
+      var xScale = d3.scaleLinear()
+        .domain([0, d3.max(femalePopulation, function(d) {
+          return d[0]/5000;
+        })])
+        .range([0, w]);
+      var yScale = d3.scaleLinear()
+        .domain([0, d3.max(femalePopulation, function(d) {
+          return d[1]/5000;
+        })])
+        .range([h, 0]);
 
-      //Create SVG element
+      var xAxis = d3.axisBottom()
+        .scale(xScale)
+        .ticks(5);
+
+      // Create SVG element
       var svg = d3.select("body")
         .append("svg")
         .attr("width", w)
@@ -65,6 +78,11 @@ xhr.onload = function () {
         .attr("font-family", "sans-serif")
         .attr("font-size", "6px")
         .attr("fill", "black");
+
+      // TODO: fix axis
+      svg.append("g")
+        .attr("class", "axis")
+        .call(xAxis);
     }
   }
 }
