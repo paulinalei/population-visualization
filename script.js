@@ -20,25 +20,29 @@ xhr.onload = function () {
     if (femalePopulation.length > 0) {
       console.log('we in here');
       // Width and height
-      var w = 800;
-      var h = 800;
+      var w = 901;
+      var h = 901;
       var barPadding = 1;
+      var transformValue = 5;
 
       // TODO: fix scales
       var xScale = d3.scaleLinear()
-        .domain([0, d3.max(femalePopulation, function(d) {
-          return d[0]/5000;
-        })])
-        .range([0, w]);
-      var yScale = d3.scaleLinear()
-        .domain([0, d3.max(femalePopulation, function(d) {
-          return d[1]/5000;
-        })])
-        .range([h, 0]);
+        .domain(d3.extent(femalePopulation, function(d) {
+          return d.age;
+        }))
+        .range([0, w - 1]);
 
-      var xAxis = d3.axisBottom()
-        .scale(xScale)
-        .ticks(5);
+      var yScale = d3.scaleLinear()
+        .domain(d3.extent(femalePopulation, function(d) {
+          return d.females/5000;
+        }))
+        .range([h - 1, 0]);
+
+      var xAxis = d3.axisBottom(xScale)
+        .ticks(4);
+
+      var yAxis = d3.axisLeft(yScale)
+        .ticks(4);
 
       // Create SVG element
       var svg = d3.select("body")
@@ -51,7 +55,7 @@ xhr.onload = function () {
         .enter()
         .append("rect")
         .attr("x", function(d, i) {
-          return i * (w / femalePopulation.length);
+          return i * (w / femalePopulation.length) + transformValue;
         })
         .attr("y", function(d) {
           return h - (d/5000);
@@ -70,7 +74,7 @@ xhr.onload = function () {
           return Number(Math.round((d/1000000)+"e1") + "e-1");
         })
         .attr("x", function(d, i) {
-          return i * (w / femalePopulation.length) + (w / femalePopulation.length - barPadding) /2;
+          return i * (w / femalePopulation.length) + (w / femalePopulation.length - barPadding) /2 + transformValue;
         })
         .attr("y", function(d) {
           return h - (d/5000) + 14;
@@ -79,10 +83,15 @@ xhr.onload = function () {
         .attr("font-size", "6px")
         .attr("fill", "black");
 
-      // TODO: fix axis
       svg.append("g")
-        .attr("class", "axis")
+        .attr("class", "x-axis")
+        .attr("transform", `translate(${transformValue}, 0)`)
         .call(xAxis);
+
+      svg.append("g")
+        .attr("class", "y-axis")
+        .attr("transform", `translate(${transformValue}, 0)`)
+        .call(yAxis);
     }
   }
 }
