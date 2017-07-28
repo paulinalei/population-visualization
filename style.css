@@ -7,7 +7,6 @@ html, body {
 .axis line {
     fill: none;
     stroke: black;
-    shape-rendering: crispEdges;
 }
 
 .axis text {
